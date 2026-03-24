@@ -1,49 +1,16 @@
 class ComputerUse < Formula
   desc "macOS desktop control CLI — screenshots, input simulation, app management"
   homepage "https://github.com/dnakov/computer-use"
-  url "https://github.com/dnakov/computer-use/archive/refs/heads/main.tar.gz"
+  url "https://github.com/dnakov/computer-use/releases/download/v0.1.0/computer-use-0.1.0.tar.gz"
+  sha256 "00a20e9993470fc3854148079331abb55482d031fcd10eebf599bfdc33a84911"
   version "0.1.0"
   license "MIT"
 
-  depends_on :macos => :sonoma
-  depends_on xcode: ["15.0", :build]
-
   def install
-    system "swift", "build",
-           "-c", "release",
-           "--arch", "arm64",
-           "--arch", "x86_64",
-           "--disable-sandbox"
-
-    release_dir = ".build/apple/Products/Release"
-    bin.install "#{release_dir}/computer-use"
-
-    system "swift", "build",
-           "-c", "release",
-           "--arch", "arm64",
-           "--arch", "x86_64",
-           "--disable-sandbox",
-           "--product", "teach-overlay"
-
-    app_dir = libexec/"TeachOverlay.app/Contents"
-    (app_dir/"MacOS").mkpath
-    cp "#{release_dir}/teach-overlay", app_dir/"MacOS/teach-overlay"
-    (app_dir/"Info.plist").write <<~PLIST
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>CFBundleExecutable</key><string>teach-overlay</string>
-        <key>CFBundleIdentifier</key><string>com.computer-use.teach-overlay</string>
-        <key>CFBundleName</key><string>TeachOverlay</string>
-        <key>CFBundleVersion</key><string>#{version}</string>
-        <key>LSUIElement</key><true/>
-        <key>NSHighResolutionCapable</key><true/>
-        <key>LSMinimumSystemVersion</key><string>14.0</string>
-      </dict>
-      </plist>
-    PLIST
-
+    bin.install "computer-use"
+    app_dir = libexec/"TeachOverlay.app"
+    app_dir.mkpath
+    cp_r "TeachOverlay.app/.", app_dir
     ln_sf libexec/"TeachOverlay.app", bin/"TeachOverlay.app"
   end
 
