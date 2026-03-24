@@ -2,7 +2,7 @@ class ComputerUse < Formula
   desc "macOS desktop control CLI — screenshots, input simulation, app management"
   homepage "https://github.com/dnakov/computer-use"
   url "https://github.com/dnakov/computer-use/releases/download/v0.2.0/computer-use-0.2.0.tar.gz"
-  sha256 "49abd64f8eac62a60711db164f4547d8c34d3cef34ed26a5fa13537a1ea56086"
+  sha256 "7bdd24c1a25f27a04e61c0345281a93e6b2e66c4f6d0c4627a85aaa98eeebbe8"
   version "0.2.0"
   license "MIT"
 
